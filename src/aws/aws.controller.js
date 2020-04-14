@@ -84,6 +84,7 @@ export function uploadToAws(req, res, next) {
     } else {
       // Delete the file
       fs.unlinkSync(file.path);
+      err.jegan = "checeking"
       res.status(403).json(err);
     }
   });
