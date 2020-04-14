@@ -60,7 +60,7 @@ export function uploadToAws(req, res, next) {
   console.log("testing",bucket)
 
   let params = {
-    ACL: 'public-read',
+    
     Key: fileKey,
     Body: fs.createReadStream(file.path),
     Bucket: AWS_S3_FILES_BUCKET,
