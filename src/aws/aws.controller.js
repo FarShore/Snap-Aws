@@ -45,11 +45,14 @@ export function uploadToAws(req, res, next) {
   aws.config.accessKeyId = AWS_ACCESS_KEY_ID;
   aws.config.secretAccessKey = AWS_SECRET_ACCESS_KEY;
 
+
   // Create our bucket and set params
   let bucket = new aws.S3({
     params: { Bucket: AWS_S3_FILES_BUCKET }
   });
 
+  console.log("testing",bucket)
+  
   let params = {
     ACL: 'public-read',
     Key: fileKey,
