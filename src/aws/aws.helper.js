@@ -61,6 +61,10 @@ export function getFile(s3Key) {
       reject(new Error('S3 key is required to get the file.'));
     }
 
+    // Configure aws
+    AWS.config.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+    AWS.config.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+
     let params = {
       Bucket: process.env.AWS_S3_FILES_BUCKET,
       Key: s3Key,

@@ -42,8 +42,8 @@ export function uploadToAws(req, res, next) {
 
 
   // Configure aws
-`  aws.config.accessKeyId = AWS_ACCESS_KEY_ID;
-  aws.config.secretAccessKey = AWS_SECRET_ACCESS_KEY;`
+  aws.config.accessKeyId = AWS_ACCESS_KEY_ID;
+  aws.config.secretAccessKey = AWS_SECRET_ACCESS_KEY;
 
   // Create our bucket and set params
   let bucket = new aws.S3({
@@ -51,7 +51,6 @@ export function uploadToAws(req, res, next) {
   });
 
   let params = {
-    ACL: 'public-read',
     Key: fileKey,
     Body: fs.createReadStream(file.path),
     Bucket: AWS_S3_FILES_BUCKET,
@@ -81,13 +80,13 @@ export function uploadToAws(req, res, next) {
 }
 
 export function s3Signature(req, res, next) {
-  // Configure aws
-  aws.config.accessKeyId = AWS_ACCESS_KEY_ID;
-  aws.config.secretAccessKey = AWS_SECRET_ACCESS_KEY;
   if (!req.query.fileType || !req.query.fileName) {
     return res.status(422).json({ error: 'Missing required parameters' });
   }
+
   const s3 = new aws.S3({ region: AWS_REGION});
+  aws.config.update({accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY});
+
   let fileType = req.query.fileType;
 
   // Clean the file name of special characters, extra spaces, etc.

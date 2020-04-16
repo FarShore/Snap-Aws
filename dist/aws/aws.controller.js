@@ -54,7 +54,8 @@ function uploadToAws(req, res, next) {
   var fileKey = AWS_S3_FILES_KEY_PREFIX + '/' + randomBytes + '/' + fileName;
 
   // Configure aws
-  '  aws.config.accessKeyId = AWS_ACCESS_KEY_ID;\n  aws.config.secretAccessKey = AWS_SECRET_ACCESS_KEY;';
+  _awsSdk2.default.config.accessKeyId = AWS_ACCESS_KEY_ID;
+  _awsSdk2.default.config.secretAccessKey = AWS_SECRET_ACCESS_KEY;
 
   // Create our bucket and set params
   var bucket = new _awsSdk2.default.S3({
@@ -62,7 +63,6 @@ function uploadToAws(req, res, next) {
   });
 
   var params = {
-    ACL: 'public-read',
     Key: fileKey,
     Body: _fs2.default.createReadStream(file.path),
     Bucket: AWS_S3_FILES_BUCKET,
@@ -92,13 +92,13 @@ function uploadToAws(req, res, next) {
 }
 
 function s3Signature(req, res, next) {
-  // Configure aws
-  _awsSdk2.default.config.accessKeyId = AWS_ACCESS_KEY_ID;
-  _awsSdk2.default.config.secretAccessKey = AWS_SECRET_ACCESS_KEY;
   if (!req.query.fileType || !req.query.fileName) {
     return res.status(422).json({ error: 'Missing required parameters' });
   }
+
   var s3 = new _awsSdk2.default.S3({ region: AWS_REGION });
+  _awsSdk2.default.config.update({ accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY });
+
   var fileType = req.query.fileType;
 
   // Clean the file name of special characters, extra spaces, etc.
