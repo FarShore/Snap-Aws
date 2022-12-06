@@ -20,7 +20,7 @@
     "babelify": "^7.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-connect": "^3.2.2",
+    "gulp-connect": "^5.7.0",
     "gulp-cssimport": "^3.0.2",
     "gulp-jscs": "^3.0.2",
     "gulp-jsdoc3": "^0.2.1",
